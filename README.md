@@ -84,6 +84,8 @@ This repository is a standalone Java/JVM dataset for exercising difficult Java-t
 
 - `docs/EDGE_CASE_TESTS.md` explains the Java baseline tests and dataset audit.
 - `docs/EDGE_CASE_REPORT.md` records J2K pass/fail observations after conversion.
+- `docs/CONVERTER_FAILURE_PROPOSAL.md` proposes a Kotlin target shape for one
+  concrete converter weakness.
 
 ## Local Verification
 
