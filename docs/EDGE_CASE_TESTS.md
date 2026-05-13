@@ -54,7 +54,5 @@ known Java baseline.
 
 - Add generated-Kotlin compile checks once the main pipeline can construct a
   reliable Kotlin compilation classpath for converted outputs.
-- Add one targeted workaround proposal for a concrete converter failure found in
-  the edge-case report.
 - Add more framework-specific annotation cases only if the current annotation
   case does not produce useful converter findings.

@@ -65,10 +65,3 @@ the Java 17 syntax cases and several review-worthy quality issues.
 - `TryWithResourcesCase.kt`: one `!!` assertion and three `!!` occurrences
   inside call arguments.
 - `VarargsArraysCase.kt`: one Java interop leftover warning.
-
-## Proposed Follow-Up
-
-`docs/CONVERTER_FAILURE_PROPOSAL.md` proposes a Kotlin target shape for the
-Java 17 pattern/record failures. This is the best current candidate for the
-assignment's optional "proposed solution in Kotlin" item because it is concrete,
-small, and clearly tied to generated invalid Kotlin.
