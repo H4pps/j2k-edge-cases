@@ -16,7 +16,7 @@ public final class RawTypesUncheckedCastsCase {
      * @param key map key
      * @return copied typed list
      */
-    @SuppressWarnings({"rawtypes", "unchecked"})
+    @SuppressWarnings({"rawtypes", "uncheckedList"})
     public List<String> readStringList(Map rawMap, String key) {
         Object value = rawMap.get(key);
         if (value == null) {
