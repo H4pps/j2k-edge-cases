@@ -25,7 +25,7 @@ public final class RiskyNotNullAssertionInCallCase {
      * @return decorated nested name
      */
     public String renderHolder(Holder holder) {
-        return decorate(holder.payload().name().trim());
+        return decorate(holder.normalizedPayloadName());
     }
 
     private String join(String left, String right) {
@@ -38,13 +38,33 @@ public final class RiskyNotNullAssertionInCallCase {
 
     /**
      * Simple holder for nested payload access.
+     *
+     * @param payload nested payload
      */
     public record Holder(Payload payload) {
+        /**
+         * Returns the normalized nested payload name.
+         *
+         * @return normalized payload name
+         */
+        public String normalizedPayloadName() {
+            return payload.normalizedName();
+        }
     }
 
     /**
      * Simple payload for nested name access.
+     *
+     * @param name raw name
      */
     public record Payload(String name) {
+        /**
+         * Returns the trimmed payload name.
+         *
+         * @return trimmed payload name
+         */
+        public String normalizedName() {
+            return name.trim();
+        }
     }
 }

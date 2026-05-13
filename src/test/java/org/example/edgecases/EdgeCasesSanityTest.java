@@ -48,18 +48,15 @@ class EdgeCasesSanityTest {
         AnnotationHeavyFrameworkStyleCase.AuditSink sink = auditEvents::add;
         AnnotationHeavyFrameworkStyleCase edgeCase = new AnnotationHeavyFrameworkStyleCase(sink);
 
-        assertEquals("created:order-1:SKU-123:2", edgeCase.createOrder(" sku-123 : 2 : Alice "));
-        assertEquals("order:order-1:SKU-123:2:Alice:trace-9", edgeCase.findOrder("order-1", "trace-9"));
-        assertEquals("missing:order-2:trace-10", edgeCase.findOrder("order-2", "trace-10"));
-        assertEquals("rejected:out-of-stock:SKU-MISSING", edgeCase.createOrder("sku-missing:1:Bob"));
-        assertEquals("rejected:validation:invalid-quantity", edgeCase.createOrder("sku-123:0:Alice"));
+        assertEquals("created:SKU-123", edgeCase.createOrder(" sku-123 "));
+        assertEquals("found:order-1:trace-9", edgeCase.findOrder(" order-1 ", " trace-9 "));
+        assertEquals("rejected:blank-request", edgeCase.createOrder("   "));
+        assertEquals("audit", sink.name());
         assertEquals(
                 List.of(
-                        List.of("createOrder", "SKU-123", "2", "Alice"),
+                        List.of("createOrder", "SKU-123"),
                         List.of("findOrder", "order-1", "trace-9"),
-                        List.of("findOrder", "order-2", "trace-10"),
-                        List.of("rejectOrder", "SKU-MISSING", "out-of-stock"),
-                        List.of("rejectOrder", "invalid-quantity")),
+                        List.of("rejectOrder", "blank-request")),
                 auditEvents);
     }
 

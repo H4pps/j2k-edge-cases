@@ -13,6 +13,9 @@ public final class StaticNestedCompanionLikeCase {
     private final String value;
 
     private StaticNestedCompanionLikeCase(String value) {
+        if (value.isBlank()) {
+            throw new IllegalArgumentException("value must not be blank");
+        }
         this.value = value;
     }
 
@@ -30,6 +33,7 @@ public final class StaticNestedCompanionLikeCase {
      */
     public static final class Companion {
         private Companion() {
+            validateFactoryName("Companion");
         }
 
         /**
@@ -49,6 +53,17 @@ public final class StaticNestedCompanionLikeCase {
          */
         public StaticNestedCompanionLikeCase standard() {
             return from("standard");
+        }
+    }
+
+    /**
+     * Validates the singleton factory name used during initialization.
+     *
+     * @param name factory name
+     */
+    private static void validateFactoryName(String name) {
+        if (!"Companion".equals(name)) {
+            throw new IllegalArgumentException("Unexpected factory name: " + name);
         }
     }
 }
