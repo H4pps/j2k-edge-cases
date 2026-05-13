@@ -7,7 +7,7 @@ committed to this repository.
 
 ## Run Summary
 
-- Dataset commit tested: `6e52c0cede99a3808877b18742478a3db5acce75`
+- Dataset source commit tested: `10b05bc5ddfd38c0ce2551b93d9480c13647aa44`
 - Java baseline: `./gradlew test` passed.
 - J2K conversion status: completed.
 - Java files discovered: 17.
@@ -15,7 +15,7 @@ committed to this repository.
 - File coverage: 100%.
 - Package preservation: 100%.
 - Evaluator status: completed with warnings.
-- Evaluator quality warnings: 7.
+- Evaluator quality warnings: 8.
 
 The converter generated one Kotlin file for every Java input, but this is not a
 compile-success guarantee. Manual inspection found invalid generated Kotlin in
@@ -28,7 +28,7 @@ the Java 17 syntax cases and several review-worthy quality issues.
 | Nested anonymous classes | Needs manual review | Generated Kotlin exists with no evaluator warning. Review capture scoping and anonymous-object semantics manually. |
 | Recursive generics and wildcards | Needs manual review | Generated Kotlin exists with no evaluator warning. Generic projection shape still deserves manual review. |
 | SAM/lambda overloads | Needs manual review | Generated Kotlin exists with no evaluator warning. Check that overload disambiguation remains explicit enough for Kotlin. |
-| Annotation-heavy framework style | Failed compile review | Generated annotation declarations use `KClass` without an import and Java annotation interfaces are represented as Kotlin annotation classes. This is a useful annotation-target/import failure candidate. |
+| Annotation-heavy framework style | Needs manual review | Expanded controller/service/repository-style logic is now present in generated Kotlin, including request parsing, validation, inventory checks, repository lookup, and audit calls. Generated annotation declarations still use `KClass` without an import and should be compile-checked later. |
 | Try-with-resources | Needs manual review | Generated Kotlin contains `!!` inside nested `use` conversion. Close order should be reviewed if generated code is compiled later. |
 | Checked exceptions | Needs manual review | `@Throws` is preserved, but generated exception messages contain `text!!` inside constructor-call arguments. |
 | Static nested companion-like pattern | Needs manual review | Generated Kotlin exists with no evaluator warning. Static holder shape should be reviewed for Kotlin API ergonomics. |
@@ -53,12 +53,14 @@ the Java 17 syntax cases and several review-worthy quality issues.
   call record accessor methods.
 - Vararg array conversion in `VarargsArraysCase.kt` creates a nullable array but
   returns it as a non-null `Array<String>`.
-- Annotation conversion in `AnnotationHeavyFrameworkStyleCase.kt` exposes an
-  unresolved-looking `KClass` type and should be checked by a future generated
-  Kotlin compile step.
+- Annotation conversion in `AnnotationHeavyFrameworkStyleCase.kt` preserves the
+  expanded framework-like code, but exposes an unresolved-looking `KClass` type
+  in generated annotation declarations and should be checked by a future
+  generated Kotlin compile step.
 
 ## Quality Warnings
 
+- `AnnotationHeavyFrameworkStyleCase.kt`: one Java interop leftover warning.
 - `CheckedExceptionsCase.kt`: two `!!` assertions, both inside call arguments.
 - `MissingNullabilityAnnotationsCase.kt`: one `!!` assertion.
 - `RawTypesUncheckedCastsCase.kt`: one `!!` assertion.
