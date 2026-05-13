@@ -25,8 +25,8 @@ This repository is a standalone Java/JVM dataset for exercising difficult Java-t
 - Expected J2K risk: conversion can lose explicit cast intent and introduce ambiguous Kotlin overload resolution.
 
 ### 4) Annotation-heavy framework-style class (`AnnotationHeavyFrameworkStyleCase`)
-- Hypothesis: stacked class/method/parameter annotations and marker interfaces mimic framework wiring complexity.
-- Expected J2K risk: annotation targets/use-site mapping in Kotlin can shift (`@param`, `@field`, etc.), changing runtime behavior.
+- Hypothesis: stacked annotations plus controller/service/repository-style logic mimic framework wiring complexity.
+- Expected J2K risk: annotation targets/use-site mapping in Kotlin can shift (`@param`, `@field`, etc.), and real request parsing/validation code can expose conversion gaps beyond declaration preservation.
 
 ### 5) Try-with-resources (`TryWithResourcesCase`)
 - Hypothesis: resource declarations with multiple closables depend on deterministic close order.
